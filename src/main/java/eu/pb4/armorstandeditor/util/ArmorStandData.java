@@ -40,7 +40,7 @@ public class ArmorStandData {
         ArmorStandEntityAccessor asea = (ArmorStandEntityAccessor) armorStand;
         this.yaw = armorStand.getYaw();
         this.noGravity = armorStand.hasNoGravity();
-        this.hidePlate = armorStand.shouldHideBasePlate();
+        this.hidePlate = !armorStand.shouldShowBasePlate();
         this.small = armorStand.isSmall();
         this.showArms = armorStand.shouldShowArms();
         this.invisible = armorStand.isInvisible();

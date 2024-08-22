@@ -24,7 +24,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.EulerAngle;
 import net.minecraft.world.World;
 import xyz.nucleoid.disguiselib.api.EntityDisguise;
@@ -141,11 +140,11 @@ public class LegacyEvents {
 
         UseItemCallback.EVENT.register((PlayerEntity player, World world, Hand hand) -> {
             if (world.isClient) {
-                return TypedActionResult.pass(player.getStackInHand(hand));
+                return ActionResult.PASS;
             }
 
             if (!LegacyPlayerExt.useLegacy(player)) {
-                return TypedActionResult.pass(player.getStackInHand(hand));
+                return ActionResult.PASS;
             }
 
             Config config = ConfigManager.getConfig();
@@ -155,10 +154,10 @@ public class LegacyEvents {
                     && EditorActions.OPEN_EDITOR.canUse(player)
                     && (!config.configData.requireIsArmorStandEditorTag || itemStack.get(DataComponentTypes.CUSTOM_DATA).getNbt().getBoolean("isArmorStandEditor"))) {
                 LegacyEditorGuis.openGui((ServerPlayerEntity) player);
-                return TypedActionResult.success(player.getMainHandStack());
+                return ActionResult.SUCCESS_SERVER;
             }
 
-            return TypedActionResult.pass(player.getMainHandStack());
+            return ActionResult.PASS;
         });
 
         AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
@@ -215,7 +214,7 @@ public class LegacyEvents {
                 armorStand.setNoGravity(!armorStand.hasNoGravity());
                 break;
             case TOGGLE_BASE:
-                asea.callSetHideBasePlate(!armorStand.shouldHideBasePlate());
+                asea.callSetHideBasePlate(armorStand.shouldShowBasePlate());
                 break;
             case TOGGLE_SIZE:
                 asea.callSetSmall(!armorStand.isSmall());

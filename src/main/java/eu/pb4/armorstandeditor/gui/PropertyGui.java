@@ -17,8 +17,8 @@ public class PropertyGui extends BaseGui {
     private static final List<Entry> ENTRIES = List.of(
             Entry.of(EditorActions.TOGGLE_VISIBILITY, "invisible", Items.GLASS, ArmorStandEntity::setInvisible, ArmorStandEntity::isInvisible),
             Entry.of(EditorActions.TOGGLE_GRAVITY,"no_gravity", Items.FEATHER, PropertyGui::setNoGravity, ArmorStandEntity::hasNoGravity),
-            Entry.ofa(EditorActions.TOGGLE_ARMS, "arms", Items.STICK, ArmorStandEntityAccessor::callSetShowArms, ArmorStandEntity::shouldShowArms),
-            Entry.ofa(EditorActions.TOGGLE_BASE, "hide_base", Items.SMOOTH_STONE_SLAB, ArmorStandEntityAccessor::callSetHideBasePlate, ArmorStandEntity::shouldHideBasePlate),
+            Entry.of(EditorActions.TOGGLE_ARMS, "arms", Items.STICK, ArmorStandEntity::setShowArms, ArmorStandEntity::shouldShowArms),
+            Entry.of(EditorActions.TOGGLE_BASE, "hide_base", Items.SMOOTH_STONE_SLAB, ArmorStandEntity::setHideBasePlate, armorStandEntity -> !armorStandEntity.shouldShowBasePlate()),
             Entry.ofa(EditorActions.TOGGLE_SIZE, "small", Items.PUFFERFISH, ArmorStandEntityAccessor::callSetSmall, ArmorStandEntity::isSmall)
     );
 
