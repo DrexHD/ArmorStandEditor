@@ -16,6 +16,7 @@ import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
@@ -47,7 +48,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Pl
     }
 
     @Inject(method = "damage", at = @At("TAIL"))
-    private void ase$closeOnDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void ase$closeOnDamage(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (GuiHelpers.getCurrentGui((ServerPlayerEntity) (Object) this) instanceof BaseGui baseGui) {
             baseGui.close();
         }

@@ -17,7 +17,6 @@ import eu.pb4.sgui.api.gui.AnvilInputGui;
 import eu.pb4.sgui.api.gui.SimpleGui;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -26,8 +25,6 @@ import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
@@ -98,7 +95,7 @@ public class LegacyEditorGuis {
     }
 
     public static boolean isSlotUnlocked(ArmorStandEntity armorStandEntity, EquipmentSlot slot) {
-        return (((ArmorStandEntityAccessor) armorStandEntity).getDisabledSlots() & 1 << slot.getArmorStandSlotId()) == 0;
+        return (((ArmorStandEntityAccessor) armorStandEntity).getDisabledSlots() & 1 << slot.getEntitySlotId()) == 0;
     }
 
     public static void openInventoryEditor(ServerPlayerEntity player, LivingEntity entity, Runnable callback) {
@@ -137,13 +134,13 @@ public class LegacyEditorGuis {
                             boolean isUnlockedTmp = isSlotUnlocked(ae, slot);
 
                             if (isUnlockedTmp) {
-                                disabledSlots |= 1 << slot.getArmorStandSlotId();
-                                disabledSlots |= 1 << slot.getArmorStandSlotId() + 8;
-                                disabledSlots |= 1 << slot.getArmorStandSlotId() + 16;
+                                disabledSlots |= 1 << slot.getEntitySlotId();
+                                disabledSlots |= 1 << slot.getOffsetEntitySlotId(8);
+                                disabledSlots |= 1 << slot.getOffsetEntitySlotId(16);
                             } else {
-                                disabledSlots &= ~(1 << slot.getArmorStandSlotId());
-                                disabledSlots &= ~(1 << slot.getArmorStandSlotId() + 8);
-                                disabledSlots &= ~(1 << slot.getArmorStandSlotId() + 16);
+                                disabledSlots &= ~(1 << slot.getEntitySlotId());
+                                disabledSlots &= ~(1 << slot.getOffsetEntitySlotId(8));
+                                disabledSlots &= ~(1 << slot.getOffsetEntitySlotId(16));
                             }
 
                             asea.setDisabledSlots(disabledSlots);
